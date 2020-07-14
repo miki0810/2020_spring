@@ -36,7 +36,7 @@ for word in chars:
 indices_char = dict([(value, key) for (key, value) in char_indices.items()])
 
 # cut the text in semi-redundant sequences of maxlen characters
-maxlen = 5
+maxlen = 10
 step = 1
 sentences = []
 next_chars = []
@@ -59,7 +59,8 @@ model.add(Bidirectional(LSTM(128, input_shape=(maxlen, len(chars)))))
 model.add(Dense(len(chars), activation='softmax'))
  
 optimizer = RMSprop(lr=0.01)
-model.compile(loss='categorical_crossentropy', optimizer=optimizer)
+model.compile(loss='categorical_crossentropy', optimizer=optimizer,metrics=['accuracy'])
+metrics=['accuracy']
  
 '''
 def sample(preds, temperature=1.0):
@@ -118,4 +119,4 @@ model.fit(x, y,
           #callbacks=[print_callback]
           )
 
-model.save("model_2.h5")
+model.save("bilstm_leng10.h5")
